@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { ItemDetailModal } from './ItemDetailModal'; // Importa el modal
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -20,6 +21,9 @@ export const LostItemsCarousel = () => {
   // 1. State to store the real items coming from the backend
   const [items, setItems] = useState<Item[]>([]);
 
+  // Estado para controlar qué ID de ítem mostrar en el modal. null = modal cerrado
+  const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
+
   // 2. Fetch data from NestJS as soon as the component loads
   useEffect(() => {
     fetch('http://localhost:3000/items')
@@ -28,6 +32,15 @@ export const LostItemsCarousel = () => {
       .catch((error) => console.error('Error fetching items:', error));
   }, []);
 
+
+  const handleOpenDetails = (id: number) => {
+    setSelectedItemId(id);
+  };
+
+  const handleCloseDetails = () => {
+    setSelectedItemId(null);
+  };
+  
   return (
     <div className="carousel-container">
       <h2 className="carousel-header">Recently Reported Items</h2>
@@ -49,7 +62,6 @@ export const LostItemsCarousel = () => {
           }}
           className="items-swiper"
         >
-          {/* 4. Map the real database items into the carousel cards */}
           {items.map((item) => (
             <SwiperSlide key={item.id}>
               <div className="card">
@@ -58,13 +70,19 @@ export const LostItemsCarousel = () => {
                 </div>
                 <div className="card-body">
                   <h3 className="card-title">{item.title}</h3>
-                  <button className="card-button">View Details</button>
+                  <button className="card-button" onClick={() => handleOpenDetails(item.id)}>
+                    View details
+                  </button>
                 </div>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
       )}
+      <ItemDetailModal 
+        itemId={selectedItemId} 
+        onClose={handleCloseDetails} 
+      />
     </div>
   );
 };
