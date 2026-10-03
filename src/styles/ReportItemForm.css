@@ -1,0 +1,153 @@
+/* src/styles/ReportItemForm.css */
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.form-card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 550px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.form-title {
+  font-size: 1.5rem;
+  color: #111827;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.form-subtitle {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+
+.report-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-field label {
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.9rem;
+}
+
+.form-field input,
+.form-field textarea {
+  padding: 0.8rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #f9fafb;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: #2e7d32;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+}
+
+.file-upload-container {
+  width: 100%;
+}
+
+.file-upload-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  height: 180px;
+  cursor: pointer;
+  background-color: #f9fafb;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.file-upload-label:hover {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #6b7280;
+}
+
+.upload-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: #f3f4f6;
+}
+
+.hidden-input {
+  display: none;
+}
+
+.btn-submit {
+  background-color: #2e7d32; 
+  color: white;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.2s;
+}
+
+.btn-submit:hover {
+  background-color: #1b5e20;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-select {
+  padding: 0.8rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #f9fafb;
+  cursor: pointer;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: #2e7d32;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+}

@@ -1,85 +1,174 @@
-.carousel-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: #ffffff;
-  border-radius: 8px;
+.items-container {
+  padding: 20px 0;
 }
 
-.carousel-header {
-  color: var(--primary-green);
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
+.section-title {
   text-align: center;
-  border-bottom: 3px solid var(--secondary-green);
-  padding-bottom: 10px;
+  font-size: 1.8rem;
+  color: #1a1a1a;
+  margin-bottom: 30px;
 }
 
-.card {
-  background-color: var(--background-light);
-  border-radius: 8px;
+.no-items {
+  text-align: center;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+/* --- ESTRUCTURA GRID 4x5 --- */
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columnas exactas */
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+/* Responsivo para pantallas pequeñas */
+@media (max-width: 1024px) {
+  .items-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+  .items-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .items-grid { grid-template-columns: 1fr; }
+}
+
+/* --- TARJETAS --- */
+.item-card {
+  background: #ffffff;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease-in-out;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
-  height: 100%;
+  border: 1px solid #e5e7eb;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.card:hover {
+.item-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
-.card-image-wrapper {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
+.item-image-wrapper {
+  height: 180px;
+  position: relative;
+  background-color: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.card-image {
+.item-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.card-body {
-  padding: 1.5rem;
+.item-placeholder {
+  color: #9ca3af;
+  font-size: 1rem;
+}
+
+.status-badge-small {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
+}
+
+.status-badge-small.encontrado, .status-badge-small.found {
+  background-color: #16a34a;
+}
+
+.status-badge-small.perdido, .status-badge-small.lost {
+  background-color: #dc2626;
+}
+
+.item-info {
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   flex-grow: 1;
-  background-color: white;
 }
 
-.card-title {
-  color: var(--primary-green);
-  font-size: 1.2rem;
-  margin: 0 0 1rem 0;
-  text-align: center;
+.item-title {
+  font-size: 1.1rem;
+  margin: 0 0 8px 0;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.card-button {
-  background-color: var(--action-yellow);
-  color: #333333;
+.item-category {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0 0 4px 0;
+  text-transform: capitalize;
+}
+
+.item-location {
+  font-size: 0.85rem;
+  color: #4b5563;
+  margin: 0 0 16px 0;
+  flex-grow: 1;
+}
+
+/* Botón amarillo forzado */
+.view-details-btn {
+  background-color: #facc15 !important;
+  color: #1a1a1a !important;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: 100%;
+}
+
+.view-details-btn:hover {
+  background-color: #eab308 !important;
+}
+
+/* --- PAGINACIÓN --- */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.page-btn {
+  background-color: #2e7d32;
+  color: white;
   border: none;
   padding: 10px 20px;
-  border-radius: 4px;
-  font-weight: bold;
+  border-radius: 8px;
   cursor: pointer;
-  margin-top: auto;
+  font-weight: 600;
   transition: background-color 0.2s;
 }
 
-.card-button:hover {
-  background-color: #e0ac0f;
+.page-btn:hover:not(:disabled) {
+  background-color: #1b5e20;
 }
 
-.swiper-button-next,
-.swiper-button-prev {
-  color: var(--primary-green) !important;
+.page-btn:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
-.swiper-pagination-bullet-active {
-  background-color: var(--secondary-green) !important;
+.page-info {
+  font-weight: 600;
+  color: #374151;
 }

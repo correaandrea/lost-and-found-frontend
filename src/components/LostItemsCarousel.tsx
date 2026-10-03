@@ -1,88 +1,114 @@
 import { useState, useEffect } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import { ItemDetailModal } from './ItemDetailModal'; // Importa el modal
-
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import { ItemDetailModal } from './ItemDetailModal';
 import '../styles/LostItemsCarousel.css';
 
-/**
- * Interface defining the structure of the data coming from Neon/Prisma
- */
 interface Item {
   id: number;
   title: string;
+  description: string;
+  category: string;
+  location: string;
   imageUrl: string;
+  status: string;
+  createdAt: string;
 }
 
 export const LostItemsCarousel = () => {
-  // 1. State to store the real items coming from the backend
   const [items, setItems] = useState<Item[]>([]);
-
-  // Estado para controlar qué ID de ítem mostrar en el modal. null = modal cerrado
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
+  
+  // Estados para la paginación
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 20; // 4 columnas x 5 filas = 20 objetos por página
 
-  // 2. Fetch data from NestJS as soon as the component loads
   useEffect(() => {
     fetch('http://localhost:3000/items')
-      .then((response) => response.json())
-      .then((data) => setItems(data))
-      .catch((error) => console.error('Error fetching items:', error));
+      .then(res => res.json())
+      .then(data => setItems(data))
+      .catch(err => console.error('Error cargando objetos:', err));
   }, []);
 
+  // Lógica de paginación
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(items.length / itemsPerPage);
 
-  const handleOpenDetails = (id: number) => {
-    setSelectedItemId(id);
-  };
+  const selectedItem = items.find(item => item.id === selectedItemId) || null;
 
-  const handleCloseDetails = () => {
-    setSelectedItemId(null);
-  };
-  
   return (
-    <div className="carousel-container">
-      <h2 className="carousel-header">Recently Reported Items</h2>
+    <div className="items-container">
+      <h2 className="section-title">Objetos Reportados Recientemente</h2>
       
-      {/* 3. Conditional rendering: display a message if the database is empty */}
       {items.length === 0 ? (
-        <p style={{ textAlign: 'center', color: '#3b6935' }}>No items reported yet.</p>
+        <p className="no-items">No hay objetos reportados aún.</p>
       ) : (
-        <Swiper
-          modules={[Navigation, Pagination, Autoplay]}
-          spaceBetween={30}
-          slidesPerView={1}
-          navigation
-          pagination={{ clickable: true }}
-          autoplay={{ delay: 3500, disableOnInteraction: false }}
-          breakpoints={{
-            640: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 }
-          }}
-          className="items-swiper"
-        >
-          {items.map((item) => (
-            <SwiperSlide key={item.id}>
-              <div className="card">
-                <div className="card-image-wrapper">
-                  <img src={item.imageUrl} alt={item.title} className="card-image" />
+        <>
+          {/* Contenedor de la Cuadrícula */}
+          <div className="items-grid">
+            {currentItems.map(item => (
+              <div key={item.id} className="item-card">
+                <div className="item-image-wrapper">
+                  {item.imageUrl ? (
+                    <img src={item.imageUrl} alt={item.title} className="item-image" />
+                  ) : (
+                    <div className="item-placeholder">📷 Sin foto</div>
+                  )}
+                  <span className={`status-badge-small ${item.status.toLowerCase()}`}>
+                    {item.status === 'found' || item.status === 'ENCONTRADO' ? 'Encontrado' : 'Perdido'}
+                  </span>
                 </div>
-                <div className="card-body">
-                  <h3 className="card-title">{item.title}</h3>
-                  <button className="card-button" onClick={() => handleOpenDetails(item.id)}>
-                    View details
+                
+                <div className="item-info">
+                  <h3 className="item-title">{item.title}</h3>
+                  <p className="item-category">{item.category}</p>
+                  <p className="item-location">📍 {item.location}</p>
+                  
+                  <button 
+                    className="view-details-btn" 
+                    onClick={() => setSelectedItemId(item.id)}
+                  >
+                    Ver detalles
                   </button>
                 </div>
               </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+            ))}
+          </div>
+
+          {/* Controles de Paginación */}
+          {totalPages > 1 && (
+            <div className="pagination">
+              <button 
+                onClick={() => setCurrentPage(prev => prev - 1)} 
+                disabled={currentPage === 1}
+                className="page-btn"
+              >
+                Anterior
+              </button>
+              <span className="page-info">
+                Página {currentPage} de {totalPages}
+              </span>
+              <button 
+                onClick={() => setCurrentPage(prev => prev + 1)} 
+                disabled={currentPage === totalPages}
+                className="page-btn"
+              >
+                Siguiente
+              </button>
+            </div>
+          )}
+        </>
       )}
-      <ItemDetailModal 
-        itemId={selectedItemId} 
-        onClose={handleCloseDetails} 
-      />
+
+      {/* Modal de detalles */}
+      {selectedItemId && (
+        <ItemDetailModal 
+          item={selectedItem} 
+          onClose={() => setSelectedItemId(null)} 
+        />
+      )}
     </div>
   );
 };
+
+export default LostItemsCarousel;
