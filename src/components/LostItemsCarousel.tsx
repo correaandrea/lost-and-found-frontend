@@ -17,16 +17,33 @@ export const LostItemsCarousel = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
   
+  // Estados para los filtros
+  const [searchTerm, setSearchTerm] = useState('');
+  const [locationFilter, setLocationFilter] = useState('');
+
   // Estados para la paginación
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 20; // 4 columnas x 5 filas = 20 objetos por página
+  const itemsPerPage = 20;
 
   useEffect(() => {
-    fetch('http://localhost:3000/items')
-      .then(res => res.json())
-      .then(data => setItems(data))
-      .catch(err => console.error('Error cargando objetos:', err));
-  }, []);
+    // Implementamos un "debounce" de 500ms para esperar a que el usuario termine de escribir
+    const delayDebounceFn = setTimeout(() => {
+      const params = new URLSearchParams();
+      if (searchTerm) params.append('search', searchTerm);
+      if (locationFilter) params.append('location', locationFilter);
+
+      fetch(`http://localhost:3000/items?${params.toString()}`)
+        .then(res => res.json())
+        .then(data => {
+          setItems(data);
+          // Reiniciamos a la primera página cada vez que se hace una nueva búsqueda
+          setCurrentPage(1); 
+        })
+        .catch(err => console.error('Error cargando objetos:', err));
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm, locationFilter]); // El efecto se dispara al cambiar los filtros
 
   // Lógica de paginación
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -40,8 +57,26 @@ export const LostItemsCarousel = () => {
     <div className="items-container">
       <h2 className="section-title">Objetos Reportados Recientemente</h2>
       
+      {/* SECCIÓN DE FILTROS */}
+      <div className="filters-container">
+        <input
+          type="text"
+          placeholder="🔍 Buscar por nombre o descripción..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="filter-input search-input"
+        />
+        <input
+          type="text"
+          placeholder="📍 Filtrar por ubicación..."
+          value={locationFilter}
+          onChange={(e) => setLocationFilter(e.target.value)}
+          className="filter-input location-input"
+        />
+      </div>
+
       {items.length === 0 ? (
-        <p className="no-items">No hay objetos reportados aún.</p>
+        <p className="no-items">No se encontraron objetos con esos filtros.</p>
       ) : (
         <>
           {/* Contenedor de la Cuadrícula */}
@@ -109,6 +144,6 @@ export const LostItemsCarousel = () => {
       )}
     </div>
   );
-};
+};  
 
 export default LostItemsCarousel;

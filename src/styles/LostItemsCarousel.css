@@ -2,6 +2,38 @@
   padding: 20px 0;
 }
 
+/* Añade esto a tu archivo CSS existente */
+.filters-container {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.filter-input {
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 300px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.filter-input:focus {
+  border-color: #007bff; /* Color de acento de tu app */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.no-results {
+  text-align: center;
+  color: #666;
+  font-size: 1.2rem;
+  margin-top: 20px;
+}
+
 .section-title {
   text-align: center;
   font-size: 1.8rem;
