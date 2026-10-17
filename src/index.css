@@ -8,7 +8,6 @@ body {
   min-height: 100vh;
 }
 
-/* Barra de Navegación */
 .navbar {
   background-color: #2e7d32;
   color: white;
@@ -56,4 +55,44 @@ body {
   padding: 2rem 1rem;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.login-btn {
+  background-color: white;
+  color: #2e7d32;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+}
+
+.login-btn:hover {
+  background-color: #f3f4f6;
+  color: #1b5e20;
+}
+
+.logout-btn {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.logout-btn:hover {
+  background-color: rgba(220, 38, 38, 0.8); /* Rojo suave al pasar el mouse */
+  border-color: transparent;
+}
+
+.login-message {
+  text-align: center;
+  margin-top: 4rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.login-message h2 {
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+}
+
+.login-message p {
+  color: #666;
 }

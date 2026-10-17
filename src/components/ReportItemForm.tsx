@@ -50,8 +50,13 @@ export const ReportItemForm = () => {
 
     try {
 
+      const token = localStorage.getItem('token'); 
+
       const response = await fetch('http://localhost:3000/items', {
         method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}` 
+        },
         body: payload, 
       });
 
