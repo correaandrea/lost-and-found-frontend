@@ -17,35 +17,34 @@ export const LostItemsCarousel = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
   
-  // Estados para los filtros
   const [searchTerm, setSearchTerm] = useState('');
   const [locationFilter, setLocationFilter] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
 
-  // Estados para la paginación
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
 
   useEffect(() => {
-    // Implementamos un "debounce" de 500ms para esperar a que el usuario termine de escribir
     const delayDebounceFn = setTimeout(() => {
       const params = new URLSearchParams();
       if (searchTerm) params.append('search', searchTerm);
       if (locationFilter) params.append('location', locationFilter);
+      if (categoryFilter) params.append('category', categoryFilter);
+      if (statusFilter) params.append('status', statusFilter);
 
       fetch(`http://localhost:3000/items?${params.toString()}`)
         .then(res => res.json())
         .then(data => {
           setItems(data);
-          // Reiniciamos a la primera página cada vez que se hace una nueva búsqueda
           setCurrentPage(1); 
         })
         .catch(err => console.error('Error cargando objetos:', err));
     }, 500);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [searchTerm, locationFilter]); // El efecto se dispara al cambiar los filtros
+  }, [searchTerm, locationFilter, categoryFilter, statusFilter]);
 
-  // Lógica de paginación
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
@@ -57,7 +56,6 @@ export const LostItemsCarousel = () => {
     <div className="items-container">
       <h2 className="section-title">Objetos Reportados Recientemente</h2>
       
-      {/* SECCIÓN DE FILTROS */}
       <div className="filters-container">
         <input
           type="text"
@@ -73,13 +71,32 @@ export const LostItemsCarousel = () => {
           onChange={(e) => setLocationFilter(e.target.value)}
           className="filter-input location-input"
         />
+        <select 
+          value={categoryFilter} 
+          onChange={(e) => setCategoryFilter(e.target.value)}
+          className="filter-input"
+        >
+          <option value="">📁 Todas las categorías</option>
+          <option value="Llaves">Llaves</option>
+          <option value="Ropa">Ropa</option>
+          <option value="Termos">Termos</option>
+          <option value="Tecnologia">Tecnología</option>
+        </select>
+        <select 
+          value={statusFilter} 
+          onChange={(e) => setStatusFilter(e.target.value)}
+          className="filter-input"
+        >
+          <option value="">📌 Todos los estados</option>
+          <option value="perdido">Perdidos</option>
+          <option value="encontrado">Encontrados</option>
+        </select>
       </div>
 
       {items.length === 0 ? (
         <p className="no-items">No se encontraron objetos con esos filtros.</p>
       ) : (
         <>
-          {/* Contenedor de la Cuadrícula */}
           <div className="items-grid">
             {currentItems.map(item => (
               <div key={item.id} className="item-card">
@@ -90,7 +107,7 @@ export const LostItemsCarousel = () => {
                     <div className="item-placeholder">📷 Sin foto</div>
                   )}
                   <span className={`status-badge-small ${item.status.toLowerCase()}`}>
-                    {item.status === 'found' || item.status === 'ENCONTRADO' ? 'Encontrado' : 'Perdido'}
+                    {['found', 'encontrado'].includes(item.status.toLowerCase()) ? 'Encontrado' : 'Perdido'}
                   </span>
                 </div>
                 
@@ -110,7 +127,6 @@ export const LostItemsCarousel = () => {
             ))}
           </div>
 
-          {/* Controles de Paginación */}
           {totalPages > 1 && (
             <div className="pagination">
               <button 
@@ -135,7 +151,6 @@ export const LostItemsCarousel = () => {
         </>
       )}
 
-      {/* Modal de detalles */}
       {selectedItemId && (
         <ItemDetailModal 
           item={selectedItem} 
