@@ -1,44 +1,181 @@
+/* --- CONTENEDOR PRINCIPAL --- */
 .items-container {
   padding: 20px 0;
-}
-
-/* Añade esto a tu archivo CSS existente */
-.filters-container {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 20px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.filter-input {
-  padding: 10px 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-  width: 100%;
-  max-width: 300px;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-.filter-input:focus {
-  border-color: #007bff; /* Color de acento de tu app */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-}
-
-.no-results {
-  text-align: center;
-  color: #666;
-  font-size: 1.2rem;
-  margin-top: 20px;
 }
 
 .section-title {
   text-align: center;
   font-size: 1.8rem;
   color: #1a1a1a;
+  margin-bottom: 8px; 
+}
+
+.section-subtitle {
+  text-align: center;
+  font-size: 1.05rem;
+  color: #4b5563;
   margin-bottom: 30px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+}
+
+/* --- NUEVA ESTRUCTURA DE FILTROS --- */
+.filters-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+  background-color: #f9fafb;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-sizing: border-box; /* Evita desbordamientos */
+  width: 100%;
+}
+
+.search-bar-row {
+  width: 100%;
+}
+
+.main-search-input {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 1.1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.main-search-input:focus {
+  border-color: #2e7d32;
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+}
+
+.secondary-filters-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  align-items: start;
+}
+
+.filter-input-text {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: white;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+  height: 42px;
+}
+
+.filter-input-text:focus {
+  border-color: #2e7d32;
+}
+
+/* --- MENÚ DESPLEGABLE MULTI-SELECT --- */
+.multiselect-container {
+  position: relative;
+  width: 100%;
+}
+
+.multiselect-header {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  height: 42px;
+  user-select: none;
+}
+
+.multiselect-header:hover {
+  border-color: #9ca3af;
+}
+
+.multiselect-arrow {
+  font-size: 0.7rem;
+  color: #6b7280;
+}
+
+.multiselect-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  margin-top: 4px;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  max-height: 250px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+}
+
+.multiselect-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #374151;
+  transition: background-color 0.2s;
+}
+
+.multiselect-option:hover {
+  background-color: #f3f4f6;
+}
+
+.multiselect-option input[type="checkbox"] {
+  accent-color: #2e7d32;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* --- BOTÓN BORRAR FILTROS --- */
+.clear-filters-btn {
+  height: 42px;
+  background-color: transparent;
+  color: #4b5563;
+  border: 1px dashed #9ca3af;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.clear-filters-btn:hover {
+  background-color: #f3f4f6;
+  color: #1f2937;
+  border-color: #6b7280;
+}
+
+/* --- MENSAJES DE ESTADO --- */
+.no-results {
+  text-align: center;
+  color: #666;
+  font-size: 1.2rem;
+  margin-top: 20px;
 }
 
 .no-items {

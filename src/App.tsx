@@ -14,7 +14,6 @@ function App() {
     localStorage.setItem('token', token);
     setIsAuthenticated(true);
     try {
-     
       const payload = JSON.parse(atob(token.split('.')[1]));
       setUser({ name: payload.name, picture: payload.picture, email: payload.email });
     } catch (e) {
@@ -46,7 +45,13 @@ function App() {
   return (
     <div className="app-container">
       <nav className="navbar">
-        <div className="nav-brand">Lost & Found UdeA</div>
+        <div 
+          className="nav-brand" 
+          onClick={() => window.location.href = '/'} 
+          style={{ cursor: 'pointer' }}
+        >
+          Lost & Found UdeA
+        </div>
         <div className="nav-links">
           <button className={`nav-btn ${activeTab === 'search' ? 'active' : ''}`} onClick={() => setActiveTab('search')}>Buscar Objetos</button>
           

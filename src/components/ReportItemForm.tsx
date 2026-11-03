@@ -6,6 +6,7 @@ export const ReportItemForm = () => {
   const initialState = {
     title: '',
     category: '',
+    city: '', // Agregado el estado inicial de la ciudad
     location: '',
     status: 'found',
     description: '',
@@ -40,6 +41,7 @@ export const ReportItemForm = () => {
     const payload = new FormData();
     payload.append('title', formData.title);
     payload.append('category', formData.category);
+    payload.append('city', formData.city); // Agregada la ciudad al payload
     payload.append('location', formData.location);
     payload.append('status', formData.status);
     payload.append('description', formData.description);
@@ -49,7 +51,6 @@ export const ReportItemForm = () => {
     }
 
     try {
-
       const token = localStorage.getItem('token'); 
 
       const response = await fetch('http://localhost:3000/items', {
@@ -141,24 +142,61 @@ export const ReportItemForm = () => {
                 onChange={handleChange}
                 className="form-select"
               >
-                <option value="found">Encontrado</option>
                 <option value="lost">Perdido</option>
+                <option value="found">Encontrado</option>
               </select>
+              
+              <div className="status-help-box">
+                {formData.status === 'lost' ? (
+                  <p><strong>Perdido:</strong> Se te perdió algo en el campus, nadie lo ha publicado y lo estás buscando.</p>
+                ) : (
+                  <p><strong>Encontrado:</strong> Encontraste un objeto tirado y lo dejaste a salvo en alguna oficina o bloque.</p>
+                )}
+              </div>
             </div>
           </div>
 
+          {/* NUEVOS CAMPOS DE CIUDAD Y UBICACIÓN */}
           <div className="form-field">
-            <label htmlFor="location">Ubicación</label>
+            <label htmlFor="city">Sede / Ciudad</label>
+            <select
+              id="city"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              className="form-select"
+              required
+            >
+              <option value="" disabled>Seleccione ciudad UdeA (A-Z)</option>
+              <option value="Amalfi, Colombia">Amalfi, Colombia</option>
+              <option value="Andes, Colombia">Andes, Colombia</option>
+              <option value="Apartadó, Colombia">Apartadó, Colombia</option>
+              <option value="Carepa, Colombia">Carepa, Colombia</option>
+              <option value="Caucasia, Colombia">Caucasia, Colombia</option>
+              <option value="El Carmen de Viboral, Colombia">El Carmen de Viboral, Colombia</option>
+              <option value="Medellín, Colombia">Medellín, Colombia</option>
+              <option value="Puerto Berrío, Colombia">Puerto Berrío, Colombia</option>
+              <option value="Santa Fe de Antioquia, Colombia">Santa Fe de Antioquia, Colombia</option>
+              <option value="Segovia, Colombia">Segovia, Colombia</option>
+              <option value="Sonsón, Colombia">Sonsón, Colombia</option>
+              <option value="Turbo, Colombia">Turbo, Colombia</option>
+              <option value="Yarumal, Colombia">Yarumal, Colombia</option>
+            </select>
+          </div>
+
+          <div className="form-field">
+            <label htmlFor="location">Ubicación Específica</label>
             <input
               id="location"
               type="text"
               name="location"
-              placeholder="Ej. Bloque 19, Biblioteca central..."
+              placeholder="Ej. Bloque 22, piso 1 / Biblioteca central"
               value={formData.location}
               onChange={handleChange}
               required
             />
           </div>
+          {/* FIN DE LOS NUEVOS CAMPOS */}
 
           <div className="form-field">
             <label htmlFor="description">Descripción</label>
