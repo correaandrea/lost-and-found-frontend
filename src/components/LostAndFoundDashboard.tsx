@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ReportItemForm } from './ReportItemForm';
 // import { SearchItems } from './SearchItems'; // Tu otro componente
 

@@ -10,6 +10,7 @@ export const ReportItemForm = () => {
     location: '',
     status: 'found',
     description: '',
+    privateDetail: '',
   };
 
   const [formData, setFormData] = useState(initialState);
@@ -45,6 +46,9 @@ export const ReportItemForm = () => {
     payload.append('location', formData.location);
     payload.append('status', formData.status);
     payload.append('description', formData.description);
+    if (formData.status === 'found' && formData.privateDetail.trim()) {
+      payload.append('privateDetail', formData.privateDetail.trim());
+    }
     
     if (imageFile) {
       payload.append('image', imageFile); 
@@ -210,6 +214,25 @@ export const ReportItemForm = () => {
               required
             />
           </div>
+
+          {formData.status === 'found' && (
+            <div className="form-field">
+              <label htmlFor="privateDetail">Detalle privado de verificación (opcional)</label>
+              <textarea
+                id="privateDetail"
+                name="privateDetail"
+                placeholder="Ej. La pantalla está rota en la esquina inferior izquierda"
+                rows={2}
+                maxLength={500}
+                value={formData.privateDetail}
+                onChange={handleChange}
+              />
+              <small className="field-help">
+                No se muestra públicamente: solo lo verás tú (en «Mi Perfil») y los administradores. Quien te contacte por correo
+                recibirá la sugerencia de describir una característica del objeto, y así puedes comprobar que es el dueño.
+              </small>
+            </div>
+          )}
 
           <div className="form-field">
             <label>Fotografía del objeto</label>

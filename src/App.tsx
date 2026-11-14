@@ -2,20 +2,23 @@ import { useState, useEffect } from 'react';
 import LostItemsCarousel from './components/LostItemsCarousel'; 
 import { ReportItemForm } from './components/ReportItemForm';
 import { UserProfile } from './components/UserProfile.tsx';
+import { AdminPanel } from './components/AdminPanel';
+import { decodeToken } from './auth';
 import './index.css';
 
 function App() {
-  const [activeTab, setActiveTab] = useState<'search' | 'publish' | 'profile'>('search');
+  const [activeTab, setActiveTab] = useState<'search' | 'publish' | 'profile' | 'admin'>('search');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<{ name: string; picture: string; email: string } | null>(null);
+  const [user, setUser] = useState<{ name: string; picture: string; email: string; role: string } | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
 
   const handleToken = (token: string) => {
     localStorage.setItem('token', token);
     setIsAuthenticated(true);
     try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      setUser({ name: payload.name, picture: payload.picture, email: payload.email });
+      const payload = decodeToken(token);
+      if (!payload) throw new Error('Token inválido');
+      setUser({ name: payload.name, picture: payload.picture, email: payload.email, role: payload.role ?? 'STUDENT' });
     } catch (e) {
       console.error("Error leyendo el token", e);
     }
@@ -59,6 +62,10 @@ function App() {
             <button className={`nav-btn ${activeTab === 'publish' ? 'active' : ''}`} onClick={() => setActiveTab('publish')}>Publicar Objeto</button>
           )}
 
+          {isAuthenticated && user?.role === 'ADMIN' && (
+            <button className={`nav-btn ${activeTab === 'admin' ? 'active' : ''}`} onClick={() => setActiveTab('admin')}>Administración</button>
+          )}
+
           {isAuthenticated && user ? (
             <div className="profile-menu-container">
               <button className="profile-btn" onClick={() => setShowDropdown(!showDropdown)}>
@@ -88,6 +95,7 @@ function App() {
         {activeTab === 'search' && <LostItemsCarousel />}
         {activeTab === 'publish' && isAuthenticated && <ReportItemForm />}
         {activeTab === 'profile' && isAuthenticated && <UserProfile user={user} />}
+        {activeTab === 'admin' && isAuthenticated && user?.role === 'ADMIN' && <AdminPanel />}
         
         {activeTab !== 'search' && !isAuthenticated && (
           <div className="login-message">

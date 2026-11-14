@@ -1,0 +1,142 @@
+/* --- AVISOS --- */
+.notice {
+  margin: 12px 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.notice-success { color: #166534; background: #dcfce7; }
+.notice-error { color: #991b1b; background: #fee2e2; }
+
+.notice-hint {
+  margin: 16px 0 0;
+  padding: 12px 0 0;
+  color: #6b7280;
+  background: none;
+  border-top: 1px solid #e5e7eb;
+  border-radius: 0;
+}
+
+.field-help {
+  display: block;
+  margin-top: 4px;
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+/* --- CONTACTAR --- */
+.contact-section {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.btn-contact {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #2e7d32;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-contact:hover:not(:disabled) { background-color: #1b5e20; }
+.btn-contact:disabled { opacity: 0.7; cursor: wait; }
+
+.contact-fallback {
+  margin: 10px 0 0;
+  font-size: 0.88rem;
+  color: #374151;
+}
+
+.contact-fallback a { color: #1d4ed8; font-weight: 600; }
+
+/* --- DIÁLOGO DE CONFIRMACIÓN --- */
+.confirm-dialog {
+  text-align: left;
+}
+
+.confirm-dialog h3 { text-align: center; }
+.confirm-dialog > p { text-align: center; margin-bottom: 16px; }
+
+.confirm-dialog-note {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.confirm-dialog-note textarea {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.confirm-dialog-note textarea:focus {
+  outline: none;
+  border-color: #2e7d32;
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.12);
+}
+
+.btn-confirm-primary { background: #2e7d32; }
+.btn-confirm-primary:hover:not(:disabled) { background: #1b5e20; }
+.btn-confirm:disabled, .btn-cancel:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* --- ESTADO RESUELTO --- */
+.resolved-tag {
+  margin: 4px 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #166534;
+}
+
+.btn-resolve,
+.btn-reopen {
+  width: 100%;
+  padding: 10px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-resolve {
+  color: #ffffff;
+  background: #2e7d32;
+  border: none;
+}
+
+.btn-resolve:hover { background: #1b5e20; }
+
+.btn-reopen {
+  color: #374151;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+}
+
+.btn-reopen:hover { background: #e5e7eb; }
+
+.private-detail-note {
+  margin: 4px 0 8px;
+  padding: 6px 8px;
+  font-size: 0.8rem;
+  color: #92400e;
+  background: #fffbeb;
+  border: 1px dashed #f59e0b;
+  border-radius: 6px;
+  word-break: break-word;
+}

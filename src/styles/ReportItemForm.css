@@ -151,3 +151,24 @@
   background-color: #ffffff;
   box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
 }
+
+/* --- CAJA DE AYUDA DE ESTADOS --- */
+.status-help-box {
+  margin-top: 10px;
+  padding: 12px;
+  background-color: #f0fdf4; /* Fondo verde muy suave */
+  border-left: 4px solid #16a34a; /* Línea decorativa verde UdeA */
+  border-radius: 4px 8px 8px 4px;
+  font-size: 0.85rem;
+  color: #374151;
+  line-height: 1.4;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.status-help-box p {
+  margin: 0;
+}
+
+.status-help-box strong {
+  color: #166534;
+}
